@@ -1,0 +1,61 @@
+const Symbols = {
+    and: '\u2227', // ∧
+    space: '\u00a0', // Non-breaking space ( )
+    copyright: '\u00a9', // ©
+    trademark: '\u2122', // ™
+    registered: '\u00ae', // ®
+    ampersand: '\u0026', // &
+    lessThan: '\u003c', // <
+    greaterThan: '\u003e', // >
+    quotation: '\u0022', // "
+    apostrophe: '\u0027', // '
+    cent: '\u00a2', // ¢
+    pound: '\u00a3', // £
+    yen: '\u00a5', // ¥
+    euro: '\u20ac', // €
+    section: '\u00a7', // §
+    paragraph: '\u00b6', // ¶
+    dagger: '\u2020', // †
+    doubleDagger: '\u2021', // ‡
+    bullet: '\u2022', // •
+    ellipsis: '\u2026', // …
+    prime: '\u2032', // ′
+    doublePrime: '\u2033', // ″
+    infinity: '\u221e', // ∞
+    angle: '\u2220', // ∠
+    degree: '\u00b0', // °
+    plusMinus: '\u00b1', // ±
+    divide: '\u00f7', // ÷
+    multiply: '\u00d7', // ×
+    squareRoot: '\u221a', // √
+    micro: '\u00b5', // µ
+    omega: '\u03a9', // Ω
+    alpha: '\u03b1', // α
+    beta: '\u03b2', // β
+    pi: '\u03c0', // π
+    sigma: '\u03c3', // σ
+    theta: '\u03b8', // θ
+    phi: '\u03c6', // φ
+    arrowRight: '\u2192', // →
+    arrowLeft: '\u2190', // ←
+    arrowUp: '\u2191', // ↑
+    arrowDown: '\u2193', // ↓
+    doubleArrow: '\u2194', // ↔
+    check: '\u2713', // ✓
+    cross: '\u2717', // ✗
+    heart: '\u2665', // ♥
+    diamond: '\u2666', // ♦
+    club: '\u2663', // ♣
+    spade: '\u2660', // ♠
+    star: '\u2605', // ★
+    sun: '\u2600', // ☀
+    moon: '\u1f319', // 🌙
+    cloud: '\u2601', // ☁
+    umbrella: '\u2602', // ☂
+    music: '\u266a', // ♪
+    smiley: '\u263a', // ☺
+    sadFace: '\u2639', // ☹
+  };
+  
+  export default Symbols;
+  
