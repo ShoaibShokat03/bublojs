@@ -1,24 +1,19 @@
 import Config from "../config/config.js";
 import { render } from "./dom.js";
 
-// Fixed useState implementation
-let stateCursor = 0; // Global counter during a render
+let stateCursor = 0;          // global hook cursor
+let effects = [];             // collected effects during render
+let isRendering = false;      // prevent nested renders
+let pendingRender = false;    // queue if render already running
 
+// ---------- useState ----------
 export function useState(initialValue) {
-  // Unique for every call
-  stateCursor++; // Move cursor for next useState call
-  const index = Config.appState.get("render-component-index");
-  const key = `state-${index}-${stateCursor}`;
-//   console.log("useState key", key, "cursor", stateCursor);
+  const index = stateCursor++;
+  const compKey = Config.appState.get("render-component-index");
+  const key = `state-${compKey}-${index}`;
 
-  const componentState = Config.componentState.get("component-state");
-  const renderState = Config.appState.get("renderd-state");
-  if (componentState !== renderState) {
-    // Initialize if doesn't exist
-    if (!Config.appState.has(key)) {
-      Config.appState.set(key, initialValue);
-      console.log("useState initialized", key, initialValue);
-    }
+  if (!Config.appState.has(key)) {
+    Config.appState.set(key, initialValue);
   }
 
   const getState = () => Config.appState.get(key);
@@ -27,39 +22,88 @@ export function useState(initialValue) {
     const currentValue = Config.appState.get(key);
     if (newValue !== currentValue) {
       Config.appState.set(key, newValue);
-      // Before re-render, reset cursor
-      stateCursor = 0;
-      // render(Config.componentState.get("renderd-state"), Config.appRoot);
+      scheduleUpdate(); // controlled re-render
     }
   };
 
-  return [getState, setState];
+  return [getState(), setState];
 }
 
-// Important: Reset cursor to 0 before every re-render
+// ---------- Reset Cursor ----------
 export function resetStateCursor() {
   stateCursor = 0;
+  effects = []; // clear collected effects
 }
 
-export function useEffect(callback, dependencies = []) {
-  const key = Symbol();
-  const state = Config.appState.get(key) || { lastDeps: [], hasRun: false };
+// ---------- useEffect ----------
+export function useEffect(callback, dependencies) {
+  const index = stateCursor++;
+  const compKey = Config.appState.get("render-component-index");
+  const key = `effect-${compKey}-${index}`;
 
-  if (
-    !state.hasRun ||
-    dependencies.some((dep, i) => dep !== state.lastDeps[i])
-  ) {
-    callback();
-    Config.appState.set(key, { lastDeps: dependencies, hasRun: true });
+  const old = Config.appState.get(key) || { deps: undefined, cleanup: null };
+
+  let hasChanged = true;
+
+  if (dependencies === undefined) {
+    // no deps => run on every render
+    hasChanged = true;
+  } else if (old.deps === undefined) {
+    // first time => run always
+    hasChanged = true;
+  } else {
+    // shallow compare
+    hasChanged = dependencies.some((d, i) => d !== old.deps[i]);
+  }
+
+  if (hasChanged) {
+    effects.push(() => {
+      if (old.cleanup) old.cleanup();
+      const cleanup = callback();
+      Config.appState.set(key, { deps: dependencies, cleanup });
+    });
   }
 }
 
+// ---------- useRef ----------
 export function useRef(initialValue) {
   return { current: initialValue };
 }
 
+// ---------- useMemo ----------
 export function useMemo(factory, dependencies) {
-  const [getState, setState] = useState(factory());
-  useEffect(() => setState(factory()), dependencies);
-  return getState();
+  const [value, setValue] = useState(factory());
+  useEffect(() => setValue(factory()), dependencies);
+  return value;
+}
+
+// ---------- Schedule Update (controlled re-render) ----------
+function scheduleUpdate() {
+  if (isRendering) {
+    pendingRender = true;
+    return;
+  }
+
+  isRendering = true;
+  try {
+    const comp = Config.componentState.get("renderd-state");
+    if (comp) {
+      render(comp, Config.appRoot);
+      // run collected effects after render
+      effects.forEach((fn) => fn());
+      effects = [];
+    }
+  } catch (err) {
+    console.error("Render Error:", err);
+  } finally {
+    isRendering = false;
+    if (pendingRender) {
+      pendingRender = false;
+      scheduleUpdate();
+    }
+  }
+}
+export function runEffects() {
+  effects.forEach((fn) => fn());
+  effects = [];
 }

@@ -1,6 +1,6 @@
 import Config from "../config/config.js";
 import LoadOnVDOM from "../app/Load_On_VDOM.js";
-import { resetStateCursor } from "../modules/hooks.js";
+import { resetStateCursor, runEffects } from "../modules/hooks.js";
 
 export function createElement(type, props = {}, ...children) {
   return {
@@ -187,6 +187,7 @@ function convertImageToWebP(imageUrl, callback) {
   img.onerror = () => callback(imageUrl);
 }
 
+//OLD CODE
 export function render(fun, container) {
   try {
     resetStateCursor();
@@ -195,6 +196,7 @@ export function render(fun, container) {
     const newVNode = fun();
     updateDOM(container, oldVNode, newVNode);
     container._vNode = newVNode;
+    runEffects();
     LoadOnVDOM();
     Config.componentState.set("renderd-state", fun);
   } catch (error) {
@@ -203,7 +205,7 @@ export function render(fun, container) {
 }
 
 export function updateElement(selector, newVNode) {
-  const oldElement = document.querySelector(selector);
+  const oldElement =typeof(selector)=="string"? document.querySelector(selector):selector;
   if (oldElement) {
     oldElement.replaceWith(createDOMElement(newVNode));
   }

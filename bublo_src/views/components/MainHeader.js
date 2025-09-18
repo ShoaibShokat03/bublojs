@@ -8,7 +8,7 @@ export default function MainHeader() {
   // Register component for re-rendering;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen());
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   function isActiveTab(pathname) {
     return requests.url(pathname) === requests.windowGetHref();
@@ -19,7 +19,7 @@ export default function MainHeader() {
     A({ href: requests.url("/"), class: "logo" }, Config.appName),
     Div({}, `${requests.windowGetHref()}`),
     Nav(
-      { class: `main-nav ${isMenuOpen() ? "active" : ""}` },
+      { class: `main-nav ${isMenuOpen ? "active" : ""}` },
       A(
         {
           href: requests.url("/"),
@@ -60,9 +60,9 @@ export default function MainHeader() {
       {
         class: "hamburger",
         onclick: toggleMenu,
-        "aria-label": isMenuOpen() ? "Close menu" : "Open menu",
+        "aria-label": isMenuOpen ? "Close menu" : "Open menu",
       },
-      isMenuOpen() ? "✕" : "☰"
+      isMenuOpen ? "✕" : "☰"
     )
   );
 }

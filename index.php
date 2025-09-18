@@ -3,7 +3,7 @@ function handleApiRequest()
 {
     $request = $_SERVER['REQUEST_URI'];
     if (strpos($request, "/api/") !== false) {
-        $file = str_replace("/bublojs/ytca/api/", "", $request);
+        $file = str_replace("/apps/js/bublojs/api/", "", $request);
         return file_get_contents($file);
     }
     return null;

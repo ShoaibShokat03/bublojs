@@ -14,13 +14,13 @@ const Config = {
   appRoot: document.querySelector("#app"),
   appName: "BUBLOJS",
   appVersion: "1.0.0",
-  appUrl: "http://localhost/bublojs/ytca",
-  baseUrl: AppHelper.appOrigin() + "/bublojs/ytca",
+  appUrl: "http://localhost/apps/js/bublojs",
+  baseUrl: AppHelper.appOrigin() + "/apps/js/bublojs",
   appKey: "ytca_1234",
   contactMail: "contact@getserv.online",
 
   api: {
-    baseUrl: "http://localhost/bublojs/ytca/api",
+    baseUrl: "http://localhost/apps/js/bublojs/api",
     endpoints: {
       signup: () => `${Config.api.baseUrl}/signup`,
       login: () => `${Config.api.baseUrl}/login`,

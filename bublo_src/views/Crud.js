@@ -28,27 +28,27 @@ export default function Crud() {
 
   function add(e) {
     e.preventDefault();
-    if (isEditing()) {
+    if (isEditing) {
       e.target.reset();
       setData(
-        data().map((item) =>
-          item.id === formData().id ? { ...item, ...formData() } : item
+        data.map((item) =>
+          item.id === formData.id ? { ...item, ...formData } : item
         )
       );
       setFormData({ id: "", name: "", email: "" });
       setIsEditing(false);
     } else {
       const newId = Math.random().toString(36).substr(2, 9);
-      setFormData({ ...formData(), id: newId });
-      data().push(formData());
+      setFormData({ ...formData, id: newId });
+      data.push(formData);
       setFormData({ id: "", name: "", email: "" });
       e.target.reset();
-      setData(data());
+      setData(data);
     }
   }
   function handleInputChange(event) {
     const { name, value } = event.target;
-    setFormData({ ...formData(), [name]: value });
+    setFormData({ ...formData, [name]: value });
   }
 
   return Layout(
@@ -68,14 +68,14 @@ export default function Crud() {
             Input({
               type: "text",
               name: "name",
-              value: formData().name,
+              value: formData.name,
               placeholder: "Name",
               oninput: handleInputChange,
             }),
             Input({
               type: "text",
               name: "email",
-              value: formData().email,
+              value: formData.email,
               placeholder: "Email",
               oninput: handleInputChange,
             }),
@@ -85,7 +85,7 @@ export default function Crud() {
         Br(),
         Div(
           {},
-          ...data().map((item) => {
+          ...data.map((item) => {
             return Div(
               {},
               Span({}, item.name),
@@ -104,7 +104,7 @@ export default function Crud() {
               Button(
                 {
                   onclick: () => {
-                    setData(data().filter((i) => i.id !== item.id));
+                    setData(data.filter((i) => i.id !== item.id));
                   },
                 },
                 "Delete"

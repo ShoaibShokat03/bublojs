@@ -1,35 +1,4 @@
-RewriteEngine On
-
-# Enable the rewriting engine
-
-RewriteBase /bublojs/ytca
-
-# Set the base URL for all subsequent rewrite rules
-
-SetEnv ENVIRONMENT development
-# Set the environment variable (change to 'production' for production environment)
-
-<IfModule mod_headers.c>
-    <If "env('ENVIRONMENT') == 'development'">
-        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-        Header set Pragma "no-cache"
-    </If>
-    <If "env('ENVIRONMENT') == 'production'">
-        Header set Cache-Control "max-age=31536000, public"
-    </If>
-</IfModule>
-
-RewriteCond %{REQUEST_FILENAME} !-f
-
-# Check if the requested URL is not an existing file
-
+RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-d
-
-# Check if the requested URL is not an existing directory
-
-RewriteRule ^(.*)$ index.php [L]
-
-# Redirect all requests to index.php if the conditions above are met
-
-
-
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . index.php [L]
