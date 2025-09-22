@@ -31,6 +31,18 @@ const Config = {
     },
   },
 
+  // Gemini AI Configuration
+  gemini: {
+    apiKey: "AIzaSyDmhvbzlHx1ZVnzzsd746zxJQneKBnyDUo", // Replace with your actual Gemini API key
+    model: "gemini-1.5-flash",
+    baseUrl: "https://generativelanguage.googleapis.com/v1beta",
+    endpoints: {
+      generateContent: () => `${Config.gemini.baseUrl}/models/${Config.gemini.model}:generateContent`,
+    },
+    maxTokens: 1000,
+    temperature: 0.7,
+  },
+
   session: {
     tokenKey: "authToken",
     refreshToken: "refreshToken",

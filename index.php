@@ -25,8 +25,9 @@ if ($apiResponse !== null) {
     <meta name="description" content="A fast and scalable SPA built with a custom vanilla JS framework">
     <meta name="keywords" content="SPA, vanilla JS, fast, scalable, SEO">
     <meta name="robots" content="index, follow">
-    <title>YTCA</title>
+    <title>BUBLOJS - Modern Vanilla JavaScript SPA Framework</title>
     <link rel="stylesheet" href="./bublo_src/styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="module" src="./bublo_src/app/main.js"></script>
 </head>
 

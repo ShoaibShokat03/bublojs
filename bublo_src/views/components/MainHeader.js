@@ -1,12 +1,11 @@
-import { Header, A, Nav, Span, Div } from "../../modules/html.js";
+import { Header, A, Nav, Span, Div, Button } from "../../modules/html.js";
 import { useState } from "../../modules/hooks.js";
 import { requests } from "../../modules/requests.js";
 import { render } from "../../modules/dom.js";
 import Config from "../../config/config.js";
+import { routeUtils } from "../../routes/routes.js";
 
 export default function MainHeader() {
-  // Register component for re-rendering;
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -14,55 +13,57 @@ export default function MainHeader() {
     return requests.url(pathname) === requests.windowGetHref();
   }
 
+  // Get navigation items from routes
+  const navItems = routeUtils.getNavigationItems();
+
   return Header(
     { class: "main-header" },
-    A({ href: requests.url("/"), class: "logo" }, Config.appName),
-    Div({}, `${requests.windowGetHref()}`),
-    Nav(
-      { class: `main-nav ${isMenuOpen ? "active" : ""}` },
-      A(
-        {
-          href: requests.url("/"),
-          style: `${isActiveTab("/") ? "color:red;" : ""}`,
-        },
-        "Home"
+    Div(
+      { class: "header-container" },
+      A({ href: requests.url("/"), class: "logo" }, 
+        Span({ class: "logo-icon" }, "🚀"),
+        Span({ class: "logo-text" }, Config.appName)
       ),
-      A(
-        {
-          href: requests.url("/crud"),
-          style: `${isActiveTab("/crud") ? "color:red;" : ""}`,
-        },
-        "CRUD"
+      
+      Nav(
+        { class: `main-nav ${isMenuOpen ? "active" : ""}` },
+        ...navItems.map(item => 
+          A(
+            {
+              href: requests.url(item.path),
+              class: `nav-link ${isActiveTab(item.path) ? "active" : ""}`,
+            },
+            item.title
+          )
+        ),
+        A(
+          {
+            href: requests.url("/crud"),
+            class: `nav-link demo-link ${isActiveTab("/crud") ? "active" : ""}`,
+          },
+          "Demo"
+        )
       ),
-      A(
-        {
-          href: requests.url("/doc"),
-          style: `${isActiveTab("/doc") ? "color:red;" : ""}`,
-        },
-        "Docs"
+      
+      Div(
+        { class: "header-actions" },
+        Button(
+          {
+            class: "btn btn-outline btn-sm",
+            onclick: () => window.open("https://github.com", "_blank")
+          },
+          "GitHub"
+        )
       ),
-      A(
+      
+      Button(
         {
-          href: requests.url("/about"),
-          style: `${isActiveTab("/about") ? "color:red;" : ""}`,
+          class: "hamburger",
+          onclick: toggleMenu,
+          "aria-label": isMenuOpen ? "Close menu" : "Open menu",
         },
-        "About"
-      ),
-      A(
-        {
-          href: requests.url("/contact"),
-          style: `${isActiveTab("/contact") ? "color:red;" : ""}`,
-        },
-        "Contact"
+        Span({ class: "hamburger-icon" }, isMenuOpen ? "✕" : "☰")
       )
-    ),
-    Span(
-      {
-        class: "hamburger",
-        onclick: toggleMenu,
-        "aria-label": isMenuOpen ? "Close menu" : "Open menu",
-      },
-      isMenuOpen ? "✕" : "☰"
     )
   );
 }

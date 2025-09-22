@@ -21,17 +21,48 @@ import Layout from "./components/Layout.js";
 
 export default function Contact() {
   return Layout(
-    createElement(
-      "div",
-      { class: "contact-page" },
-      // Hero Section
-
-      // Contact Form Section
-      Section(
-        { class: "contact-form-section" },
+    // Hero Section
+    Section(
+      { class: "page-hero" },
+      Div(
+        { class: "page-hero-container" },
+        H1(
+          { class: "page-title" },
+          "Contact ",
+          Span({ class: "gradient-text" }, "BUBLOJS")
+        ),
+        P(
+          { class: "page-subtitle" },
+          "Have questions about BUBLOJS? Want to contribute or report an issue? We'd love to hear from you!"
+        ),
         Div(
-          { class: "contact-form card" },
-          H2({}, "Send Us a Message"),
+          { class: "page-actions" },
+          Button(
+            {
+              class: "btn btn-primary btn-lg",
+              onclick: () => window.open("https://github.com/bublojs/issues", "_blank")
+            },
+            "Report Issue"
+          ),
+          Button(
+            {
+              class: "btn btn-outline btn-lg",
+              onclick: () => window.open("https://github.com/bublojs", "_blank")
+            },
+            "GitHub"
+          )
+        )
+      )
+    ),
+
+    // Contact Form Section
+    Section(
+      { class: "form-section" },
+      Div(
+        { class: "form-container" },
+        Div(
+          { class: "form-card" },
+          H2({ class: "form-title" }, "Send Us a Message"),
           Form(
             {
               class: "form",
@@ -83,7 +114,10 @@ export default function Contact() {
                 class: "textarea",
               })
             ),
-            Button({ type: "submit", class: "btn btn-primary" }, "Send Message")
+            Div(
+              { class: "form-actions" },
+              Button({ type: "submit", class: "btn btn-primary btn-lg" }, "Send Message")
+            )
           )
         )
       )
