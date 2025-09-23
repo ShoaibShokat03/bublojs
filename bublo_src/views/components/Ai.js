@@ -44,9 +44,9 @@ export default function Ai() {
 
    // Auto-open sidebar when there are messages
    useEffect(() => {
-     if (messages.length > 1) {
-       setIsSidebarOpen(true);
-     }
+    //  if (messages.length > 1) {
+    //    setIsSidebarOpen(true);
+    //  }
    }, [messages.length]);
 
   // Debug: Check if messages is an array
@@ -213,7 +213,7 @@ export default function Ai() {
               )
             )
           ),
-           isLoading && Div(
+           isLoading? Div(
              { class: "message ai-message" },
              Div(
                { class: "message-content" },
@@ -229,7 +229,7 @@ export default function Ai() {
                  Div({ class: "message-time" }, "Thinking...")
                )
              )
-           )
+           ): null
         ),
 
         // Chat Input

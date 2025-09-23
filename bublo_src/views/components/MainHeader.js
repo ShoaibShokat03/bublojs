@@ -38,8 +38,8 @@ export default function MainHeader() {
         ),
         A(
           {
-            href: requests.url("/crud"),
-            class: `nav-link demo-link ${isActiveTab("/crud") ? "active" : ""}`,
+            href: requests.url("/demo"),
+            class: `nav-link demo-link ${isActiveTab("/demo") ? "active" : ""}`,
           },
           "Demo"
         )

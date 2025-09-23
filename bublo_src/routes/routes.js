@@ -5,6 +5,7 @@ const components = {
   // Main Views
   Home: () => import("../views/Home.js"),
   Crud: () => import("../views/Crud.js"),
+  Demo: () => import("../views/Demo.js"),
   About: () => import("../views/About.js"),
   Contact: () => import("../views/Contact.js"),
   Doc: () => import("../views/Doc.js"),
@@ -53,6 +54,13 @@ const routes = {
     title: "CRUD Demo",
     description: "Interactive CRUD operations demo using BUBLOJS",
     component: components.Crud,
+    auth: false,
+    category: "demo",
+  },
+  "/demo": {
+    title: "Interactive Demos",
+    description: "Comprehensive demos showcasing BUBLOJS features and capabilities",
+    component: components.Demo,
     auth: false,
     category: "demo",
   },

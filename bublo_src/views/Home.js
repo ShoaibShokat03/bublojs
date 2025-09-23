@@ -65,27 +65,7 @@ export default function Home() {
   const increment = () => setCount(count + 1);
   const decrement = () => setCount(count > 0 ? count - 1 : 0);
 
-  const [range,setRange]=useState(0);
-
-  const handleRange=(e)=>{
-    setRange(e.target.value);
-  }
-  const boxes = Array.from({ length: range }, (_, i) => i + 1);
-
   return Layout(
-    // Hero Section
-    Div({style:"margin:20px"},
-      Div({},
-        Span({},`${range}%`)
-      ),
-      Div({},
-        Input({style:"width:400px;height:40px;cursor:pointer;",type:'range',min:'0',max:'100',value:range,oninput:handleRange},'')
-      ),
-      Div({style:"width:100%;padding:20px;display:grid;grid-template-columns:repeat(20,1fr);grid-gap:20px;"},
-        ...boxes.map((box)=>{
-          return Div({style:"width:auto;align-content:center;height:30px;background:red"},box)
-        })),
-    ),
     Section(
       { class: "hero-section" },
       Div(
@@ -113,9 +93,9 @@ export default function Home() {
             Button(
               {
                 class: "btn btn-outline btn-lg",
-                onclick: () => (window.location.href = requests.url("/crud")),
+                onclick: () => (window.location.href = requests.url("/demo")),
               },
-              "View Demo"
+              "View Demos"
             )
           )
         ),

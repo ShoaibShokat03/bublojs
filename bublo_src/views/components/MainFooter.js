@@ -44,13 +44,13 @@ export default function MainFooter() {
     { name: "About", url: requests.url("/about") },
     { name: "FAQ", url: requests.url("/faq") },
     { name: "Contact", url: requests.url("/contact") },
-    { name: "Demo", url: requests.url("/crud") }
+    { name: "Demo", url: requests.url("/demo") }
   ];
 
   const resources = [
     { name: "Getting Started", url: requests.url("/doc") },
     { name: "API Reference", url: requests.url("/doc") },
-    { name: "Examples", url: requests.url("/crud") },
+    { name: "Examples", url: requests.url("/demo") },
     { name: "GitHub Repository", url: "https://github.com/bublojs", external: true },
     { name: "Report Issues", url: "https://github.com/bublojs/issues", external: true }
   ];

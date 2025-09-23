@@ -21,6 +21,7 @@ import { requests } from "../modules/requests.js";
 import Layout from "./components/Layout.js";
 import { useState } from "../modules/hooks.js";
 import { Style } from "../modules/style.js";
+import Demo from "./Demo.js";
 
 export default function Crud() {
   const [data, setData] = useState([]);
@@ -73,9 +74,9 @@ export default function Crud() {
           Button(
             {
               class: "btn btn-primary btn-lg",
-              onclick: () => window.location.href = requests.url("/doc")
+              onclick: () => window.location.href = requests.url("/demo")
             },
-            "Learn More"
+            "View More Demos"
           ),
           Button(
             {
@@ -87,6 +88,9 @@ export default function Crud() {
         )
       )
     ),
+
+    // Demo Section
+    Demo(),
 
     // CRUD Section
     Section(
