@@ -1,4 +1,4 @@
-import AppHelper from "../app/AppHelper.js";
+import Helper from "../modules/Helper.js";
 import routes from "../routes/routes.js";
 
 const Config = {
@@ -10,12 +10,14 @@ const Config = {
   appCache: new Set(), // Use Set for unique entries
   routes,
 
+
+  baseUrl: Helper.getBaseUrl(),
+  appUrl: "http://localhost/",
+
   // App Configuration
   appRoot: document.querySelector("#app"),
   appName: "BUBLOJS",
   appVersion: "1.0.0",
-  appUrl: "http://localhost/apps/js/bublojs",
-  baseUrl: AppHelper.appOrigin() + "/apps/js/bublojs",
   appKey: "ytca_1234",
   contactMail: "contact@getserv.online",
 

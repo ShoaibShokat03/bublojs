@@ -1,4 +1,4 @@
-const AppHelper = {
+const Helper = {
   // Remove trailing slash from a path
   removeEndSlash(path) {
     if (path.length > 1 && path.endsWith("/")) {
@@ -569,8 +569,12 @@ const AppHelper = {
     const origin = window.location.origin;
     return origin.endsWith("/") ? origin.slice(0, -1) : origin;
   },
+  getBaseUrl: () => {
+    const baseURL = window.location.href;
+    return baseURL.endsWith("/") ? baseURL.slice(0, -1) : baseURL;
+  },
 
 };
 
 
-export default AppHelper;
+export default Helper;

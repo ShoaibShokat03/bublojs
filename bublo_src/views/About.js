@@ -1,119 +1,71 @@
-import { createElement } from "../modules/dom.js";
 import {
+  Div,
   H1,
   H2,
   H3,
+  H4,
   P,
-  Div,
+  Button,
+  Span,
   A,
   Section,
+  Img,
   Ul,
   Li,
-  Img,
-  Span,
-  Button,
 } from "../modules/html.js";
+import { useState, useEffect } from "../modules/hooks.js";
 import { requests } from "../modules/requests.js";
-import Layout from "./components/Layout.js";
-import Config from "../config/config.js";
+import MainLayout from "./components/MainLayout.js";
 
-export default function About() {
-  const features = [
+function About() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeTimeline, setActiveTimeline] = useState(0);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const timelineItems = [
     {
-      icon: "⚡",
-      title: "Lightning Performance",
-      description: "Optimized Virtual DOM with efficient diffing algorithms for maximum speed and responsiveness."
+      year: "2023",
+      title: "The Idea",
+      description:
+        "Started as a side project to bring React-like features to vanilla JavaScript",
     },
     {
-      icon: "🎯",
-      title: "React-like Experience",
-      description: "Familiar hooks, components, and patterns that developers already know and love."
+      year: "2024 Q1",
+      title: "First Release",
+      description:
+        "Launched BUBLOJS v1.0 with basic hooks and component system",
     },
     {
-      icon: "🚀",
-      title: "Zero Dependencies",
-      description: "Pure vanilla JavaScript with no external dependencies, build tools, or complex setup required."
+      year: "2024 Q2",
+      title: "Community Growth",
+      description: "Reached 1000+ developers and 500+ projects using BUBLOJS",
     },
     {
-      icon: "📱",
-      title: "Mobile First",
-      description: "Built-in responsive design utilities and mobile-optimized performance out of the box."
+      year: "2024 Q3",
+      title: "Beta Launch",
+      description:
+        "Released beta version with advanced features and TypeScript support",
     },
-    {
-      icon: "🔧",
-      title: "Developer Friendly",
-      description: "Comprehensive debugging tools, TypeScript support, and excellent developer experience."
-    },
-    {
-      icon: "🌐",
-      title: "SEO Optimized",
-      description: "Server-side rendering capabilities and SEO optimization features for better search rankings."
-    }
   ];
-
-  const stats = [
-    { number: "1.2k+", label: "GitHub Stars" },
-    { number: "500+", label: "Active Developers" },
-    { number: "50+", label: "Production Apps" },
-    { number: "99.9%", label: "Uptime" }
-  ];
-
-  return Layout(
+  return MainLayout(
     // Hero Section
     Section(
-      { class: "about-hero-section" },
+      { class: "section" },
       Div(
-        { class: "about-hero-container" },
+        { class: "container" },
         Div(
-          { class: "about-hero-content" },
+          { class: "text-center mb-16" },
           H1(
-            { class: "about-hero-title" },
+            { class: "text-5xl font-bold mb-6" },
             "About ",
-            Span({ class: "gradient-text" }, Config.appName)
+            Span({ class: "heading-gradient-purple-pink" }, "BUBLOJS")
           ),
           P(
-            { class: "about-hero-subtitle" },
-            "BUBLOJS is a revolutionary vanilla JavaScript Single Page Application framework that brings React-like features to vanilla JavaScript without the overhead. Built for developers who want modern development patterns with the simplicity and performance of vanilla JavaScript."
-          ),
-          Div(
-            { class: "about-hero-actions" },
-            Button(
-              {
-                class: "btn btn-primary btn-lg",
-                onclick: () => window.location.href = requests.url("/doc")
-              },
-              "Read Documentation"
-            ),
-            Button(
-              {
-                class: "btn btn-outline btn-lg",
-                onclick: () => window.open("https://github.com/bublojs", "_blank")
-              },
-              "View on GitHub"
-            )
-          )
-        ),
-        Div(
-          { class: "about-hero-image" },
-          Img({
-            src: requests.url("/bublo_src/assets/hadi.jpg"),
-            alt: "BUBLOJS Framework Creator",
-            class: "creator-image"
-          })
-        )
-      )
-    ),
-
-    // Stats Section
-    Section(
-      { class: "about-stats-section" },
-      Div(
-        { class: "about-stats-container" },
-        ...stats.map(stat =>
-          Div(
-            { class: "stat-card" },
-            Div({ class: "stat-number" }, stat.number),
-            Div({ class: "stat-label" }, stat.label)
+            { class: "text-xl text-secondary max-w-3xl mx-auto" },
+            "BUBLOJS is more than just a framework - it's a philosophy of keeping web development simple, fast, and enjoyable."
           )
         )
       )
@@ -121,89 +73,245 @@ export default function About() {
 
     // Mission Section
     Section(
-      { class: "about-mission-section" },
+      { class: "section bg-neutral-50" },
       Div(
-        { class: "about-mission-container" },
+        { class: "container" },
         Div(
-          { class: "mission-content" },
-          H2({ class: "mission-title" }, "Our Mission"),
-          P(
-            { class: "mission-description" },
-            "We believe that building modern web applications shouldn't require complex build tools, heavy frameworks, or steep learning curves. BUBLOJS was created to bridge the gap between vanilla JavaScript and modern development patterns, giving developers the best of both worlds."
-          ),
-          P(
-            { class: "mission-description" },
-            "Our goal is to make web development more accessible, performant, and enjoyable while maintaining the simplicity and power that vanilla JavaScript provides."
-          )
-        ),
-        Div(
-          { class: "mission-features" },
-          H3({ class: "features-title" }, "Why BUBLOJS?"),
-          Ul(
-            { class: "mission-list" },
-            Li({}, "🚀 Zero build tools or configuration required"),
-            Li({}, "⚡ Lightning-fast performance with optimized Virtual DOM"),
-            Li({}, "🎯 Familiar React-like hooks and patterns"),
-            Li({}, "📱 Built-in responsive design utilities"),
-            Li({}, "🔧 Excellent developer experience and debugging tools"),
-            Li({}, "🌐 SEO-friendly with server-side rendering support")
-          )
-        )
-      )
-    ),
-
-    // Features Grid Section
-    Section(
-      { class: "about-features-section" },
-      Div(
-        { class: "about-features-container" },
-        H2({ class: "features-section-title" }, "Core Features"),
-        P(
-          { class: "features-section-subtitle" },
-          "Everything you need to build modern, scalable web applications"
-        ),
-        Div(
-          { class: "features-grid" },
-          ...features.map(feature =>
+          { class: "grid grid-2 gap-16 items-center" },
+          
+          // Mission Content
+          Div(
+            {},
+            H2(
+              { class: "text-4xl font-bold mb-6" },
+              "Our Mission"
+            ),
+            P(
+              { class: "text-lg text-secondary mb-6" },
+              "We believe that modern web development shouldn't require complex build tools, heavy frameworks, or endless configuration. BUBLOJS brings the power of modern JavaScript frameworks to vanilla JavaScript."
+            ),
+            P(
+              { class: "text-secondary mb-8" },
+              "Our goal is to make web development accessible, fast, and enjoyable for developers of all skill levels while maintaining the simplicity and performance of vanilla JavaScript."
+            ),
             Div(
-              { class: "feature-card" },
-              Div({ class: "feature-icon" }, feature.icon),
-              H3({ class: "feature-title" }, feature.title),
-              P({ class: "feature-description" }, feature.description)
+              { class: "flex gap-4" },
+              A(
+                { href: requests.url("/docs"), class: "btn btn-gradient btn-lg" },
+                "Get Started"
+              ),
+              A(
+                { href: requests.url("/docs"), class: "btn btn-outline btn-lg" },
+                "View Documentation"
+              )
+            )
+          ),
+
+          // Mission Visual
+          Div(
+            { class: "text-center" },
+            Div(
+              { class: "text-8xl mb-4" },
+              "🚀"
+            ),
+            H3(
+              { class: "text-2xl font-bold mb-4" },
+              "Simple. Fast. Powerful."
+            ),
+            P(
+              { class: "text-secondary" },
+              "Everything you need to build modern web applications without the complexity."
             )
           )
         )
       )
     ),
 
-    // CTA Section
+    // Timeline Section
     Section(
-      { class: "about-cta-section" },
+      { class: "section" },
       Div(
-        { class: "about-cta-container" },
-        H2({ class: "cta-title" }, "Ready to Get Started?"),
-        P(
-          { class: "cta-subtitle" },
-          "Join thousands of developers building amazing applications with BUBLOJS"
-        ),
+        { class: "container" },
         Div(
-          { class: "cta-actions" },
-          Button(
-            {
-              class: "btn btn-primary btn-lg",
-              onclick: () => window.location.href = requests.url("/doc")
-            },
-            "Get Started"
+          { class: "text-center mb-16" },
+          H2(
+            { class: "text-4xl font-bold mb-6" },
+            "Our Journey"
           ),
-          Button(
-            {
-              class: "btn btn-outline btn-lg",
-              onclick: () => window.location.href = requests.url("/crud")
-            },
-            "Try Demo"
+          P(
+            { class: "text-xl text-secondary max-w-2xl mx-auto" },
+            "From a simple idea to a thriving community of developers building amazing applications."
+          )
+        ),
+
+        // Timeline
+        Div(
+          { class: "max-w-4xl mx-auto" },
+          ...timelineItems.map((item, index) =>
+            Div(
+              { 
+                class: `timeline-item ${index % 2 === 0 ? 'timeline-left' : 'timeline-right'} mb-12`
+              },
+              Div(
+                { class: "timeline-content card p-6" },
+                Div(
+                  { class: "timeline-year text-secondary-600 font-bold text-lg mb-2" },
+                  item.year
+                ),
+                H3(
+                  { class: "text-2xl font-bold mb-3" },
+                  item.title
+                ),
+                P(
+                  { class: "text-secondary" },
+                  item.description
+                )
+              )
+            )
+          )
+        )
+      )
+    ),
+
+    // Values Section
+    Section(
+      { class: "section bg-neutral-50" },
+      Div(
+        { class: "container" },
+        Div(
+          { class: "text-center mb-16" },
+          H2(
+            { class: "text-4xl font-bold mb-6" },
+            "Our Values"
+          ),
+          P(
+            { class: "text-xl text-secondary max-w-2xl mx-auto" },
+            "The principles that guide everything we do at BUBLOJS."
+          )
+        ),
+
+        Div(
+          { class: "grid grid-3 gap-8" },
+          
+          // Simplicity
+          Div(
+            { class: "card text-center" },
+            Div(
+              { class: "text-5xl mb-4" },
+              "🎯"
+            ),
+            H3(
+              { class: "text-2xl font-bold mb-4" },
+              "Simplicity"
+            ),
+            P(
+              { class: "text-secondary" },
+              "We believe in keeping things simple. No unnecessary complexity, no over-engineering - just clean, readable code that works."
+            )
+          ),
+
+          // Performance
+          Div(
+            { class: "card text-center" },
+            Div(
+              { class: "text-5xl mb-4" },
+              "⚡"
+            ),
+            H3(
+              { class: "text-2xl font-bold mb-4" },
+              "Performance"
+            ),
+            P(
+              { class: "text-secondary" },
+              "Built for speed. Every feature is optimized for performance, ensuring your applications are fast and responsive."
+            )
+          ),
+
+          // Community
+          Div(
+            { class: "card text-center" },
+            Div(
+              { class: "text-5xl mb-4" },
+              "🤝"
+            ),
+            H3(
+              { class: "text-2xl font-bold mb-4" },
+              "Community"
+            ),
+            P(
+              { class: "text-secondary" },
+              "We're building this together. Your feedback, contributions, and ideas help shape the future of BUBLOJS."
+            )
+          )
+        )
+      )
+    ),
+
+    // Team Section
+    Section(
+      { class: "section" },
+      Div(
+        { class: "container" },
+        Div(
+          { class: "text-center mb-16" },
+          H2(
+            { class: "text-4xl font-bold mb-6" },
+            "Meet the Team"
+          ),
+          P(
+            { class: "text-xl text-secondary max-w-2xl mx-auto" },
+            "The passionate developers behind BUBLOJS."
+          )
+        ),
+
+        Div(
+          { class: "grid grid-2 gap-8 max-w-4xl mx-auto" },
+          
+          // Team Member 1
+          Div(
+            { class: "card text-center" },
+            Div(
+              { class: "w-24 h-24 bg-gradient-purple-pink rounded-full mx-auto mb-4 flex items-center justify-center" },
+              Span({ class: "text-3xl font-bold text-white" }, "SS")
+            ),
+            H3(
+              { class: "text-xl font-bold mb-2" },
+              "Shoaib Shokat"
+            ),
+            P(
+              { class: "text-secondary-600 font-medium mb-2" },
+              "Founder & Lead Developer"
+            ),
+            P(
+              { class: "text-secondary text-sm" },
+              "Full-stack developer with 8+ years of experience. Passionate about creating tools that make development easier and more enjoyable."
+            )
+          ),
+
+          // Team Member 2
+          Div(
+            { class: "card text-center" },
+            Div(
+              { class: "w-24 h-24 bg-gradient-purple-pink rounded-full mx-auto mb-4 flex items-center justify-center" },
+              Span({ class: "text-3xl font-bold text-white" }, "AI")
+            ),
+            H3(
+              { class: "text-xl font-bold mb-2" },
+              "AI Assistant"
+            ),
+            P(
+              { class: "text-secondary-600 font-medium mb-2" },
+              "Development Partner"
+            ),
+            P(
+              { class: "text-secondary text-sm" },
+              "Helping with code implementation, documentation, and bringing innovative ideas to life."
+            )
           )
         )
       )
     )
   );
 }
+
+export default About;

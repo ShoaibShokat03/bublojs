@@ -1,19 +1,13 @@
-import { AddStyle } from "../modules/style.js";
-import Loader from "../views/components/Loader.js";
+import Config from "../config/config.js";
 import { render } from "../modules/dom.js";
+import { Div, P } from "../modules/html.js";
 
 export default function BeforeLoad() {
   console.log("Before Loading Virtual DOM...");
-  render(Loader, document.body); // Append loader to body
-  AddStyle([
-    {
-      selector: ".typing-loading",
-      styles: {
-        position: "fixed",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-      },
-    },
-  ]);
+
+  const loader = () => {
+    return Div({ class: "loader" }, P({}, "BUBLOJS Loading..."));
+  };
+
+  render(loader,Config.appRoot);
 }

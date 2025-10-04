@@ -127,6 +127,7 @@ export const router = {
     const newRoute = route.includes(requests.url(""))
       ? route
       : requests.url(route);
+    console.log("[[]] ROUTE [[]]", route);
     window.history.pushState({}, "", newRoute);
     await this.navigate(newRoute);
   },

@@ -23,7 +23,7 @@ bublojs/
 ├── bublo_src/
 │   ├── app/                    # Application entry points
 │   │   ├── main.js            # Main application bootstrap
-│   │   ├── AppHelper.js       # Utility functions
+│   │   ├── Helper.js       # Utility functions
 │   │   ├── Before_Load.js     # Pre-loading setup
 │   │   ├── After_Load.js      # Post-loading cleanup
 │   │   └── Load_On_VDOM.js    # VDOM lifecycle hooks
@@ -588,35 +588,35 @@ export default function Layout(...children) {
 
 ## 🔧 Utility Functions
 
-BUBLOJS includes a comprehensive set of utility functions in `AppHelper.js`:
+BUBLOJS includes a comprehensive set of utility functions in `Helper.js`:
 
 ```javascript
-import AppHelper from "../app/AppHelper.js";
+import Helper from "../modules/Helper.js";
 
 // String utilities
-const camelCase = AppHelper.toCamelCase("hello-world"); // "helloWorld"
-const slug = AppHelper.toSlug("Hello World!"); // "hello-world"
-const titleCase = AppHelper.toTitleCase("hello world"); // "Hello World"
+const camelCase = Helper.toCamelCase("hello-world"); // "helloWorld"
+const slug = Helper.toSlug("Hello World!"); // "hello-world"
+const titleCase = Helper.toTitleCase("hello world"); // "Hello World"
 
 // Date utilities
-const formattedDate = AppHelper.formatDate(new Date()); // "January 1, 2024"
-const currentDate = AppHelper.getCurrentDate(); // "2024-01-01"
+const formattedDate = Helper.formatDate(new Date()); // "January 1, 2024"
+const currentDate = Helper.getCurrentDate(); // "2024-01-01"
 
 // Array utilities
-const unique = AppHelper.removeDuplicates([1, 2, 2, 3]); // [1, 2, 3]
-const randomItem = AppHelper.getRandomItemFromArray([1, 2, 3]); // Random item
+const unique = Helper.removeDuplicates([1, 2, 2, 3]); // [1, 2, 3]
+const randomItem = Helper.getRandomItemFromArray([1, 2, 3]); // Random item
 
 // Object utilities
-const cloned = AppHelper.deepClone({ name: "John", age: 30 });
-const isEmpty = AppHelper.isEmptyObject({}); // true
+const cloned = Helper.deepClone({ name: "John", age: 30 });
+const isEmpty = Helper.isEmptyObject({}); // true
 
 // Validation
-const isValidEmail = AppHelper.isValidEmail("user@example.com"); // true
-const isValidURL = AppHelper.isValidURL("https://example.com"); // true
+const isValidEmail = Helper.isValidEmail("user@example.com"); // true
+const isValidURL = Helper.isValidURL("https://example.com"); // true
 
 // Performance utilities
-const debouncedFn = AppHelper.debounce(() => console.log("Hello"), 300);
-const throttledFn = AppHelper.throttle(() => console.log("Hello"), 1000);
+const debouncedFn = Helper.debounce(() => console.log("Hello"), 300);
+const throttledFn = Helper.throttle(() => console.log("Hello"), 1000);
 ```
 
 ## 🚀 Performance Tips
