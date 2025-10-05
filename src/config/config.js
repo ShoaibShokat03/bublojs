@@ -1,5 +1,7 @@
 import Helper from "../modules/Helper.js";
+import { router } from "../modules/router.js";
 import routes from "../routes/routes.js";
+import gateway from "./gateway.js";
 
 const Config = {
   // App State Management
@@ -10,9 +12,8 @@ const Config = {
   appCache: new Set(), // Use Set for unique entries
   routes,
 
-
-  baseUrl: Helper.getBaseUrl(),
-  appUrl: "http://localhost/",
+  appUrl: Helper.appOrigin(),
+  baseDirectory: Helper.appBaseDirectory()??"/",
 
   // App Configuration
   appRoot: document.querySelector("#app"),
@@ -46,12 +47,14 @@ const Config = {
   },
 
   session: {
-    tokenKey: "authToken",
+    accessToken: "authToken",
     refreshToken: "refreshToken",
     userRoleKey: "userRole",
     userProfile: "userProfile",
     timeout: "expired",
   },
+
+  gateway: gateway,
 
   roles: { admin: "admin", user: "user", guest: "guest" },
 
@@ -63,19 +66,20 @@ const Config = {
       : { username: "Guest", email: "" },
 
   login: async (data) => {
-    Config.storage.set(Config.session.tokenKey, data.access_token);
-    Config.storage.set(Config.session.refreshToken, data.refresh_token);
+    Config.storage.set(Config.session.accessToken, data.access_token ?? "dummy_access_token");
+    Config.storage.set(Config.session.refreshToken, data.refresh_token ?? "dummy_refresh_token");
     Config.storage.set(Config.session.userRoleKey, data.role);
-    Config.storage.set(Config.session.userProfile, JSON.stringify(data.user));
+    Config.storage.set(Config.session.userProfile, JSON.stringify(data.user ?? data));
     Config.storage.set(Config.session.timeout, data.timeout);
   },
 
   logout: async () => {
-    Config.storage.remove(Config.session.tokenKey);
+    Config.storage.remove(Config.session.accessToken);
     Config.storage.remove(Config.session.refreshToken);
     Config.storage.remove(Config.session.userRoleKey);
     Config.storage.remove(Config.session.userProfile);
     Config.storage.remove(Config.session.timeout);
+    router.go("/login");
   },
 
   settings: {
@@ -90,7 +94,7 @@ const Config = {
   },
 
   utils: {
-    getSessionToken: () => Config.storage.get(Config.session.tokenKey),
+    getSessionToken: () => Config.storage.get(Config.session.accessToken),
     isUserLoggedIn: () => !!Config.storage.get(Config.session.userProfile),
     getUserRole: () =>
       Config.storage.get(Config.session.userRoleKey) || "guest",

@@ -4,11 +4,14 @@ import { router } from "../modules/router.js";
 import { requests } from "../modules/requests.js";
 import AfterLoad from "./After_Load.js";
 import BeforeLoad from "./Before_Load.js";
+import Helper from "../modules/Helper.js";
 
 documentEvents.onDomContentLoaded(async () => {
-    console.log("App Started...");
-    BeforeLoad(); // Show loading state
-    await router.navigate(requests.windowGetHref()); // Navigate to initial route
-    routeNavigator(); // Set up navigation listeners
-    AfterLoad(); // Clean up loading state
+  console.log("App Started...");
+  BeforeLoad(); // Show loading state
+  const currentPath = requests.windowGetHref();
+  console.log(currentPath);
+  await router.navigate(currentPath); // Navigate to initial route
+  routeNavigator(); // Set up navigation listeners
+  AfterLoad(); // Clean up loading state
 });

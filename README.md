@@ -375,7 +375,7 @@ const Config = {
   },
   
   session: {
-    tokenKey: "authToken",
+    accessToken: "authToken",
     userProfile: "userProfile"
   },
   

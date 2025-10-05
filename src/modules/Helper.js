@@ -569,6 +569,10 @@ const Helper = {
     const origin = window.location.origin;
     return origin.endsWith("/") ? origin.slice(0, -1) : origin;
   },
+  appBaseDirectory: () => {
+    const baseDir = document.querySelector("base")?.getAttribute("href") || "/";
+    return baseDir.endsWith("/") ? baseDir.slice(0, -1) : baseDir;
+  },
   getBaseUrl: () => {
     const baseURL = window.location.href;
     return baseURL.endsWith("/") ? baseURL.slice(0, -1) : baseURL;

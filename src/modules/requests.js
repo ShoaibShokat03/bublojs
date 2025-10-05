@@ -1,8 +1,8 @@
 import Config from "../config/config.js";
+import Helper from "./Helper.js";
 
 export const requests = {
-    url: (path = "") => `${Config.baseUrl}${path.startsWith("/") ? path : "/" + path}`,
-
+    url: (path = "") => `${Helper.appOrigin()}${Config.baseDirectory}${path.startsWith("/") ? path : "/" + path}`,
     get(paramName) {
         return new URLSearchParams(window.location.search).get(paramName);
     },

@@ -76,11 +76,11 @@ function MainLayout(...children) {
                 ),
 
                 // Header Actions (Desktop)
-                Div(
-                    { class: "flex gap-2" },
-                    Button({ class: "btn btn-ghost btn-sm", "aria-label": "Sign in to your account" }, "Sign In"),
-                    Button({ class: "btn btn-primary btn-sm", "aria-label": "Get started with BUBLOJS" }, "Get Started")
-                ),
+                // Div(
+                //     { class: "flex gap-2" },
+                //     Button({ class: "btn btn-ghost btn-sm", "aria-label": "Sign in to your account" }, "Sign In"),
+                //     Button({ class: "btn btn-primary btn-sm", "aria-label": "Get started with BUBLOJS" }, "Get Started")
+                // ),
 
                 // Mobile Menu Button
                 Button(
@@ -185,23 +185,23 @@ function MainLayout(...children) {
                             { class: "footer-links" },
                             Li(
                                 { class: "footer-item" },
-                                A({ href: "/", class: "footer-link" }, "Home")
+                                A({ href: requests.url("/"), class: "footer-link" }, "Home")
                             ),
                             Li(
                                 { class: "footer-item" },
-                                A({ href: "/about", class: "footer-link" }, "About")
+                                A({ href: requests.url("/about"), class: "footer-link" }, "About")
                             ),
                             Li(
                                 { class: "footer-item" },
-                                A({ href: "/docs", class: "footer-link" }, "Documentation")
+                                A({ href: requests.url("/docs"), class: "footer-link" }, "Documentation")
                             ),
                             Li(
                                 { class: "footer-item" },
-                                A({ href: "/demo", class: "footer-link" }, "Live Demo")
+                                A({ href: requests.url("/demo"), class: "footer-link" }, "Live Demo")
                             ),
                             Li(
                                 { class: "footer-item" },
-                                A({ href: "/contact", class: "footer-link" }, "Contact")
+                                A({ href: requests.url("/contact"), class: "footer-link" }, "Contact")
                             )
                         )
                     ),
