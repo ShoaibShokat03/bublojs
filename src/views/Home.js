@@ -74,6 +74,47 @@ function HomePage() {
   );
 }`;
 
+
+  function Welcome({ name }) {
+    return Div(
+      { class: "welcome-card" },
+      H1({}, `Hello, ${name}!`),
+      P({}, "Welcome to BUBLOJS")
+    );
+  }
+
+  function TodoList({ todos }) {
+    return Div(
+      { class: "todo-list" },
+      H2({}, "My Todos"),
+      ...todos.map(todo =>
+        Div(
+          { class: "todo-item" },
+          Span({}, todo.text),
+          Button(
+            { onclick: () => deleteTodo(todo.id) },
+            "Delete"
+          )
+        )
+      )
+    );
+  }
+  const [todoData, setTodoData] = useState([]);
+
+  useEffect(() => {
+    setTodoData([{ id: 1, text: 'Task 1' }]);
+  }, [])
+
+  function deleteTodo(id) {
+    const items = [];
+    todoData.forEach(item => {
+      if (item.id !== id) {
+        items.push(item);
+      }
+    });
+    setTodoData(items)
+  }
+
   return MainLayout(
     // Hero Section with Two-Column Layout
     Section(
@@ -164,74 +205,77 @@ function HomePage() {
               )
             )
           )
-        ),
+        ),),
+    ),
 
-        // Features Section
+    Section({ class: "section" },
+      // Features Section
+      Div(
+        { class: "mt-6" },
+        H2(
+          { class: "text-center text-3xl font-bold mb-12" },
+          "Why Choose BUBLOJS?"
+        ),
         Div(
-          { class: "mt-16" },
-          H2(
-            { class: "text-center text-3xl font-bold mb-12" },
-            "Why Choose BUBLOJS?"
+          { class: "grid grid-3 gap-8" },
+          Div(
+            { class: "card text-center" },
+            Div({ class: "text-4xl mb-4" }, "⚡"),
+            H3({ class: "card-title" }, "Lightning Fast"),
+            P(
+              { class: "text-secondary" },
+              "Built for performance with minimal overhead and optimized rendering."
+            )
           ),
           Div(
-            { class: "grid grid-3 gap-8" },
-            Div(
-              { class: "card text-center" },
-              Div({ class: "text-4xl mb-4" }, "⚡"),
-              H3({ class: "card-title" }, "Lightning Fast"),
-              P(
-                { class: "text-secondary" },
-                "Built for performance with minimal overhead and optimized rendering."
-              )
-            ),
-            Div(
-              { class: "card text-center" },
-              Div({ class: "text-4xl mb-4" }, "🎯"),
-              H3({ class: "card-title" }, "Simple & Intuitive"),
-              P(
-                { class: "text-secondary" },
-                "Clean API design that makes web development enjoyable and productive."
-              )
-            ),
-            Div(
-              { class: "card text-center" },
-              Div({ class: "text-4xl mb-4" }, "🔧"),
-              H3({ class: "card-title" }, "Developer Friendly"),
-              P(
-                { class: "text-secondary" },
-                "Great developer experience with modern tooling and comprehensive documentation."
-              )
+            { class: "card text-center" },
+            Div({ class: "text-4xl mb-4" }, "🎯"),
+            H3({ class: "card-title" }, "Simple & Intuitive"),
+            P(
+              { class: "text-secondary" },
+              "Clean API design that makes web development enjoyable and productive."
+            )
+          ),
+          Div(
+            { class: "card text-center" },
+            Div({ class: "text-4xl mb-4" }, "🔧"),
+            H3({ class: "card-title" }, "Developer Friendly"),
+            P(
+              { class: "text-secondary" },
+              "Great developer experience with modern tooling and comprehensive documentation."
             )
           )
+        )
+      ),
+    ),
+    Section({ class: "section" },
+      // BUBLOJS Syntax Examples Section
+      Div(
+        { class: "mt-6" },
+        H2(
+          { class: "text-center text-3xl font-bold mb-12" },
+          "BUBLOJS Syntax Examples"
         ),
-
-        // BUBLOJS Syntax Examples Section
         Div(
-          { class: "mt-16" },
-          H2(
-            { class: "text-center text-3xl font-bold mb-12" },
-            "BUBLOJS Syntax Examples"
-          ),
+          { class: "grid grid-2 gap-8" },
+          // Basic Component Example
           Div(
-            { class: "grid grid-2 gap-8" },
-            // Basic Component Example
+            { class: "card" },
             Div(
-              { class: "card" },
-              Div(
-                { class: "card-header" },
-                H3({ class: "card-title" }, "Basic Component")
+              { class: "card-header" },
+              H3({ class: "card-title" }, "Basic Component")
+            ),
+            Div(
+              { class: "card-body" },
+              P(
+                { class: "text-secondary mb-4" },
+                "Simple component with props and children:"
               ),
-              Div(
-                { class: "card-body" },
-                P(
-                  { class: "text-secondary mb-4" },
-                  "Simple component with props and children:"
-                ),
-                Pre(
-                  { class: "bg-neutral-100 p-4 rounded-lg overflow-x-auto" },
-                  Code(
-                    { class: "text-sm" },
-                    `function Welcome({ name }) {
+              Pre(
+                { class: "bg-neutral-100 p-4 rounded-lg overflow-x-auto" },
+                Code(
+                  { class: "text-sm" },
+                  `function Welcome({ name }) {
   return Div(
     { class: "welcome-card" },
     H1({}, \`Hello, \${name}!\`),
@@ -241,29 +285,32 @@ function HomePage() {
 
 // Usage
 return Welcome({ name: "World" });`
-                  )
-                )
+                ),
               )
             ),
+            Div({},
+              Welcome({ name: "world" })
+            )
+          ),
 
-            // List Component Example
+          // List Component Example
+          Div(
+            { class: "card" },
             Div(
-              { class: "card" },
-              Div(
-                { class: "card-header" },
-                H3({ class: "card-title" }, "Dynamic List")
+              { class: "card-header" },
+              H3({ class: "card-title" }, "Dynamic List")
+            ),
+            Div(
+              { class: "card-body" },
+              P(
+                { class: "text-secondary mb-4" },
+                "Creating dynamic lists with BUBLOJS:"
               ),
-              Div(
-                { class: "card-body" },
-                P(
-                  { class: "text-secondary mb-4" },
-                  "Creating dynamic lists with BUBLOJS:"
-                ),
-                Pre(
-                  { class: "bg-neutral-100 p-4 rounded-lg overflow-x-auto" },
-                  Code(
-                    { class: "text-sm" },
-                    `function TodoList({ todos }) {
+              Pre(
+                { class: "bg-neutral-100 p-4 rounded-lg overflow-x-auto" },
+                Code(
+                  { class: "text-sm" },
+                  `function TodoList({ todos }) {
   return Div(
     { class: "todo-list" },
     H2({}, "My Todos"),
@@ -278,30 +325,33 @@ return Welcome({ name: "World" });`
       )
     )
   );
-}`
-                  )
+}
+//Usage
+TodoList([{id:1,text:'Task 1'}])`
                 )
               )
             ),
+            TodoList({ todos: todoData })
+          ),
 
-            // Form Component Example
+          // Form Component Example
+          Div(
+            { class: "card" },
             Div(
-              { class: "card" },
-              Div(
-                { class: "card-header" },
-                H3({ class: "card-title" }, "Form Component")
+              { class: "card-header" },
+              H3({ class: "card-title" }, "Form Component")
+            ),
+            Div(
+              { class: "card-body" },
+              P(
+                { class: "text-secondary mb-4" },
+                "Interactive form with state management:"
               ),
-              Div(
-                { class: "card-body" },
-                P(
-                  { class: "text-secondary mb-4" },
-                  "Interactive form with state management:"
-                ),
-                Pre(
-                  { class: "bg-neutral-100 p-4 rounded-lg overflow-x-auto" },
-                  Code(
-                    { class: "text-sm" },
-                    `function ContactForm() {
+              Pre(
+                { class: "bg-neutral-100 p-4 rounded-lg overflow-x-auto" },
+                Code(
+                  { class: "text-sm" },
+                  `function ContactForm() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
@@ -330,29 +380,29 @@ return Welcome({ name: "World" });`
     )
   );
 }`
-                  )
                 )
               )
-            ),
+            )
+          ),
 
-            // Conditional Rendering Example
+          // Conditional Rendering Example
+          Div(
+            { class: "card" },
             Div(
-              { class: "card" },
-              Div(
-                { class: "card-header" },
-                H3({ class: "card-title" }, "Conditional Rendering")
+              { class: "card-header" },
+              H3({ class: "card-title" }, "Conditional Rendering")
+            ),
+            Div(
+              { class: "card-body" },
+              P(
+                { class: "text-secondary mb-4" },
+                "Conditional rendering with BUBLOJS:"
               ),
-              Div(
-                { class: "card-body" },
-                P(
-                  { class: "text-secondary mb-4" },
-                  "Conditional rendering with BUBLOJS:"
-                ),
-                Pre(
-                  { class: "bg-neutral-100 p-4 rounded-lg overflow-x-auto" },
-                  Code(
-                    { class: "text-sm" },
-                    `function UserProfile({ user }) {
+              Pre(
+                { class: "bg-neutral-100 p-4 rounded-lg overflow-x-auto" },
+                Code(
+                  { class: "text-sm" },
+                  `function UserProfile({ user }) {
   return Div(
     { class: "user-profile" },
     H1({}, \`Welcome, \${user.name}\`),
@@ -367,24 +417,23 @@ return Welcome({ name: "World" });`
     )
   );
 }`
-                  )
                 )
               )
             )
           )
         )
-      ),
+      )
+    ),
 
-      // Code Modal
-      CodeModal({
-        isOpen: isModalOpen,
-        onClose: closeModal,
-        title: "Counter Component Code",
-        code: counterCode,
-        language: "javascript"
-      })
-    )
-  );
+    // Code Modal
+    CodeModal({
+      isOpen: isModalOpen,
+      onClose: closeModal,
+      title: "Counter Component Code",
+      code: counterCode,
+      language: "javascript"
+    })
+  )
 }
 
 export default Home;

@@ -66,7 +66,8 @@ function CodeModal({ isOpen, onClose, title, code, language = "javascript" }) {
                         code
                     )
                 )
-            )
+            ),
+            Div({ class: "modal-footer" }, "")
         )
     );
 }
